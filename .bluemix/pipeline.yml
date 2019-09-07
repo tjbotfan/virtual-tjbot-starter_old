@@ -30,7 +30,7 @@ stages:
             # Support Japanese HIRAGANA for kids
             curl -L -O https://raw.githubusercontent.com/tjbotfan/tjbotzero-raspbian/master/messagecatalog_hiragana.zip
             unzip messagecatalog_hiragana.zip
-            cp -r \@node-red/ app/node_modules/node-red/node_modules/
+            cp -r \@node-red/ /home/vcap/app/node_modules/node-red/node_modules/
             # Start CF Application
             cf start "${CF_APP}"
             # View logs
