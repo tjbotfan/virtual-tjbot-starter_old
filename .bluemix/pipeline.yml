@@ -27,12 +27,14 @@ stages:
             cf create-service cloudantNoSQLDB Lite "${CLOUDANT_NAME}"
             cf bind-service "${CF_APP}" "${CLOUDANT_NAME}" -c '{"role":"Manager"}'
 
-            # Support Japanese HIRAGANA for kids
-            curl -L -O https://raw.githubusercontent.com/tjbotfan/tjbotzero-raspbian/master/messagecatalog_hiragana.zip
-            unzip messagecatalog_hiragana.zip
-            cp -r \@node-red/ /home/vcap/app/node_modules/node-red/node_modules/
             # Start CF Application
             cf start "${CF_APP}"
+            
+            # Support Japanese HIRAGANA for kids
+            cf "${CF_APP}" -c curl -L -O https://raw.githubusercontent.com/tjbotfan/tjbotzero-raspbian/master/messagecatalog_hiragana.zip
+            cf "${CF_APP}" -c unzip messagecatalog_hiragana.zip
+            cf "${CF_APP}" -c cp -r \@node-red/ /home/vcap/app/node_modules/node-red/node_modules/
+            
             # View logs
             cf logs "${CF_APP}" --recent
             
