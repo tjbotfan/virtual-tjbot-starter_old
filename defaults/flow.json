@@ -237,10 +237,10 @@
         "name": "cloud"
     },
     {
-        "id": "5c666071.2f852",
-        "type": "facial-recognizer-service",
+        "id": "e3eb11b2.57955",
+        "type": "facial-age-estimator-service",
         "z": "",
-        "host": "https://max-facial-recognizer.max.us-south.containers.appdomain.cloud",
+        "host": "https://max-facial-age-estimator.max.us-south.containers.appdomain.cloud",
         "name": "cloud"
     },
     {
@@ -1468,7 +1468,7 @@
         "type": "switch",
         "z": "fe31d431.e07698",
         "name": "It contains face?",
-        "property": "payload.0",
+        "property": "payload",
         "propertyType": "msg",
         "rules": [
             {
@@ -2020,7 +2020,7 @@
         "wires": [
             [
                 "336fc028.951c4",
-                "9acf35a8.d75168"
+                "50b1bddf.8c76a4"
             ]
         ]
     },
@@ -2057,26 +2057,6 @@
         "wires": [
             [
                 "57747541.f46e7c"
-            ]
-        ]
-    },
-    {
-        "id": "9acf35a8.d75168",
-        "type": "facial-recognizer",
-        "z": "fe31d431.e07698",
-        "service": "5c666071.2f852",
-        "method": "predict",
-        "passthrough": "",
-        "annotated_input": "",
-        "predict_body": "",
-        "predict_bodyType": "str",
-        "name": "",
-        "x": 170,
-        "y": 160,
-        "wires": [
-            [
-                "674623f0.5e1e0c",
-                "e44fe232.ae9d6"
             ]
         ]
     },
@@ -2430,5 +2410,40 @@
                 "57747541.f46e7c"
             ]
         ]
+    },
+    {
+        "id": "50b1bddf.8c76a4",
+        "type": "facial-age-estimator",
+        "z": "fe31d431.e07698",
+        "service": "e3eb11b2.57955",
+        "method": "predict",
+        "passthrough": "",
+        "annotated_input": true,
+        "predict_body": "",
+        "predict_bodyType": "str",
+        "name": "",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "674623f0.5e1e0c",
+                "e44fe232.ae9d6",
+                "17d77bb.b33b684"
+            ]
+        ]
+    },
+    {
+        "id": "17d77bb.b33b684",
+        "type": "debug",
+        "z": "fe31d431.e07698",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 289.5,
+        "y": 220.5,
+        "wires": []
     }
 ]
