@@ -237,10 +237,24 @@
         "name": "cloud"
     },
     {
-        "id": "e3eb11b2.57955",
-        "type": "facial-age-estimator-service",
+        "id": "33623c58.d10cf4",
+        "type": "image-caption-generator-service",
         "z": "",
-        "host": "https://max-facial-age-estimator.max.us-south.containers.appdomain.cloud",
+        "host": "https://max-image-caption-generator.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    },
+    {
+        "id": "be6f547a.0b1da8",
+        "type": "image-segmenter-service",
+        "z": "",
+        "host": "https://max-image-segmenter.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    },
+    {
+        "id": "ee34a367.584dd",
+        "type": "object-detector-service",
+        "z": "",
+        "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
         "name": "cloud"
     },
     {
@@ -1472,7 +1486,9 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "nnull"
+                "t": "eq",
+                "v": "person",
+                "vt": "str"
             }
         ],
         "checkall": "true",
@@ -2020,7 +2036,7 @@
         "wires": [
             [
                 "336fc028.951c4",
-                "50b1bddf.8c76a4"
+                "af3a78bd.160648"
             ]
         ]
     },
@@ -2403,32 +2419,11 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 360,
+        "x": 380,
         "y": 160,
         "wires": [
             [
                 "57747541.f46e7c"
-            ]
-        ]
-    },
-    {
-        "id": "50b1bddf.8c76a4",
-        "type": "facial-age-estimator",
-        "z": "fe31d431.e07698",
-        "service": "e3eb11b2.57955",
-        "method": "predict",
-        "passthrough": "",
-        "annotated_input": true,
-        "predict_body": "",
-        "predict_bodyType": "str",
-        "name": "",
-        "x": 150,
-        "y": 160,
-        "wires": [
-            [
-                "674623f0.5e1e0c",
-                "e44fe232.ae9d6",
-                "17d77bb.b33b684"
             ]
         ]
     },
@@ -2442,8 +2437,31 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 289.5,
-        "y": 220.5,
+        "x": 410,
+        "y": 220,
         "wires": []
+    },
+    {
+        "id": "af3a78bd.160648",
+        "type": "object-detector",
+        "z": "fe31d431.e07698",
+        "service": "ee34a367.584dd",
+        "method": "predict",
+        "passthrough": "",
+        "annotated_input": "",
+        "predict_body": "",
+        "predict_bodyType": "str",
+        "predict_threshold": "0.7",
+        "predict_thresholdType": "str",
+        "name": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "17d77bb.b33b684",
+                "e44fe232.ae9d6",
+                "674623f0.5e1e0c"
+            ]
+        ]
     }
 ]
