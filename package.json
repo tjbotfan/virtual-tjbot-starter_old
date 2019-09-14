@@ -22,7 +22,7 @@
         "node-red-contrib-cognitive-services": "^0.5.5",
         "node-red-contrib-cos": "0.0.15",
         "node-red-contrib-embedded-file": "0.0.2",
-	"node-red-contrib-file-buffer":"0.0.3",
+    	"node-red-contrib-file-buffer":"0.0.3",
         "node-red-contrib-google-translate": "0.0.5",
         "node-red-contrib-image-output": "^0.4.3",
         "node-red-contrib-model-asset-exchange": "^0.2.0",
