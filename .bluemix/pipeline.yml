@@ -20,47 +20,22 @@ stages:
       - name: dev
         type: deployer
         script: |-
-            #!/bin/bash -x
+            #!/bin/bash
             CLOUDANT_NAME="node-red-shared-cloudant"
-            ibmcloud cf push "${CF_APP}" --no-start
-            ibmcloud cf set-env "${CF_APP}" NODE_RED_STORAGE_NAME "${CLOUDANT_NAME}"
-            ibmcloud cf create-service cloudantNoSQLDB Lite "${CLOUDANT_NAME}"
 
-            until [ "$RES" = "succeeded" ]
-            do
-                    RES=`ibmcloud cf service "${CLOUDANT_NAME}" | grep status | grep "create succeeded" | awk -F':' '{print $2}' | awk '{print $2}'`
-            done
+            cf push "${CF_APP}" --no-start
+            cf set-env "${CF_APP}" NODE_RED_STORAGE_NAME "${CLOUDANT_NAME}"
+            cf create-service cloudantNoSQLDB Lite "${CLOUDANT_NAME}"
 
-            ibmcloud cf bind-service "${CF_APP}" "${CLOUDANT_NAME}" -c '{"role":"Manager"}'
+            sleep 120
 
-            RES=`ibmcloud resource search "service_name:speech-to-text"`
-            if [ "${RES}" == "No resources found" ];then
-              ibmcloud resource service-instance-create "TJBot-WatsonSTT" speech-to-text lite jp-tok
-            fi
+            cf bind-service "${CF_APP}" "${CLOUDANT_NAME}" -c '{"role":"Manager"}'
 
-            RES=`ibmcloud resource search "service_name:text-to-speech"`
-            if [  == "No resources found" ];then
-              ibmcloud resource service-instance-create "TJBot-WatsonTTS" text-to-speech lite jp-tok
-            fi
-            
-            RES=`ibmcloud resource search "service_name:watson-vision-combined"`
-            if [ ${RES} == "No resources found"];then
-              ibmcloud resource service-instance-create "TJBot-WatsonVR"  watson-vision-combined lite
-            fi
-            
-            RES=`ibmcloud resource search "service_name:language-translator"`
-            if [ "${RES}" == "No resources found"];then
-              ibmcloud resource service-instance-create "TJBot-WatsonLT"  language-translator lite jp-tok
-            fi
-            
             # Start CF Application
-            ibmcloud cf start "${CF_APP}"
+            cf start "${CF_APP}"
             
             # View logs
-            ibmcloud cf logs "${CF_APP}" --recent
-            
-            # test 
-            ibmcloud resource service-instances
+            cf logs "${CF_APP}" --recent
             
         target:
           region_id: ${CF_REGION_ID}
