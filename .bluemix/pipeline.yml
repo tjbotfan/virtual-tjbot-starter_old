@@ -22,22 +22,42 @@ stages:
         script: |-
             #!/bin/bash -x
             CLOUDANT_NAME="node-red-shared-cloudant"
-            cf push "${CF_APP}" --no-start
-            cf set-env "${CF_APP}" NODE_RED_STORAGE_NAME "${CLOUDANT_NAME}"
-            cf create-service cloudantNoSQLDB Lite "${CLOUDANT_NAME}"
-            sleep 120
-            cf bind-service "${CF_APP}" "${CLOUDANT_NAME}" -c '{"role":"Manager"}'
+            ibmcloud cf push "${CF_APP}" --no-start
+            ibmcloud cf set-env "${CF_APP}" NODE_RED_STORAGE_NAME "${CLOUDANT_NAME}"
+            ibmcloud cf create-service cloudantNoSQLDB Lite "${CLOUDANT_NAME}"
 
-            # Start CF Application
-            cf start "${CF_APP}"
+            until [ "$RES" = "succeeded" ]
+            do
+                    RES=`ibmcloud cf service "${CLOUDANT_NAME}" | grep status | grep "create succeeded" | awk -F':' '{print $2}' | awk '{print $2}'`
+            done
+
+            ibmcloud cf bind-service "${CF_APP}" "${CLOUDANT_NAME}" -c '{"role":"Manager"}'
+
+            RES=`ibmcloud resource search "service_name:speech-to-text"`
+            if [ "${RES}" == "No resources found" ];then
+              ibmcloud resource service-instance-create "TJBot-WatsonSTT" speech-to-text lite jp-tok
+            fi
+
+            RES=`ibmcloud resource search "service_name:text-to-speech"`
+            if [  == "No resources found" ];then
+              ibmcloud resource service-instance-create "TJBot-WatsonTTS" text-to-speech lite jp-tok
+            fi
             
-            # Support Japanese HIRAGANA for kids
-            cf "${CF_APP}" -c curl -L -O https://raw.githubusercontent.com/tjbotfan/tjbotzero-raspbian/master/messagecatalog_hiragana.zip
-            cf "${CF_APP}" -c unzip messagecatalog_hiragana.zip
-            cf "${CF_APP}" -c cp -r \@node-red/ /home/vcap/app/node_modules/node-red/node_modules/
+            RES=`ibmcloud resource search "service_name:watson-vision-combined"`
+            if [ ${RES} == "No resources found"];then
+              ibmcloud resource service-instance-create "TJBot-WatsonVR"  watson-vision-combined lite
+            fi
+            
+            RES=`ibmcloud resource search "service_name:language-translator"`
+            if [ "${RES}" == "No resources found"];then
+              ibmcloud resource service-instance-create "TJBot-WatsonLT"  language-translator lite jp-tok
+            fi
+            
+            # Start CF Application
+            ibmcloud cf start "${CF_APP}"
             
             # View logs
-            cf logs "${CF_APP}" --recent
+            ibmcloud cf logs "${CF_APP}" --recent
             
             # test 
             ibmcloud resource service-instances
