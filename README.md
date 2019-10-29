@@ -8,7 +8,7 @@ Virtual TJBot Starter Application
 
 ※利用にはIBM Cloudのライトアカウント以上の登録が必要になります。
 
-[![Deploy to IBM Cloud](https://cloud.ibm.com/devops/setup/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/tjbotfan/virtual-tjbot-starter.git)
+[![Deploy to IBM Cloud](./button.png)](https://bluemix.net/deploy?repository=https://github.com/tjbotfan/virtual-tjbot-starter.git)
 
 This repository is a collection of tools for configuring Node-RED applications and configuration / flow data necessary for using Virtual TJBot as IBM Cloud applications.
 Click the `Deploy to IBM Cloud` button to create a dedicated environment.
