@@ -1,28 +1,25 @@
 {
-    "name"         : "node-red-app",
-    "version"      : "0.9.0",
+    "name": "node-red-app",
+    "version": "1.1.1",
     "dependencies": {
-        "appmetrics-dash": "^3.2.1",
-        "when": "~3.x",
-        "nano": "8.1.x",
-        "bcrypt": "1.0.2",
-        "cfenv":"~1.0.0",
-        "express":"4.x",
-        "body-parser":"1.x",
-        "http-shutdown":"1.2.0",
-        "node-red": "0.x",
-        "node-red-bluemix-nodes":"1.x",
-        "node-red-node-watson":"0.x",
-        "node-red-node-openwhisk":"0.x",
-        "node-red-node-cf-cloudant":"0.x",
-        "node-red-contrib-scx-ibmiotapp":"0.x",
-        "node-red-nodes-cf-sqldb-dashdb":"0.x",
+        "@cloudant/cloudant": "^4.2.2",
+        "appmetrics-dash": "^5.2.0",
+        "bcrypt": "^3.0.7",
+        "body-parser": "1.x",
+        "cfenv": "^1.2.2",
+        "express": "4.x",
+        "http-shutdown": "1.2.1",
+        "node-red": "1.x",
+        "node-red-node-cf-cloudant": "0.x",
+        "node-red-node-openwhisk": "0.x",
+        "node-red-node-watson": "0.x",
+        "node-red-nodes-cf-sqldb-dashdb": "0.x",
         "node-red-contrib-browser-utils": "0.0.9",
         "node-red-contrib-cloud-vision-api": "^1.0.2",
         "node-red-contrib-cognitive-services": "^0.5.5",
         "node-red-contrib-cos": "0.0.15",
         "node-red-contrib-embedded-file": "0.0.2",
-    	"node-red-contrib-file-buffer":"0.0.3",
+        "node-red-contrib-file-buffer": "0.0.3",
         "node-red-contrib-google-translate": "0.0.5",
         "node-red-contrib-image-output": "^0.4.3",
         "node-red-contrib-model-asset-exchange": "^0.2.0",
@@ -38,6 +35,6 @@
         "start": "node --max-old-space-size=160 index.js --settings ./bluemix-settings.js -v"
     },
     "engines": {
-        "node": "8.x"
+        "node": "12.x"
     }
 }
